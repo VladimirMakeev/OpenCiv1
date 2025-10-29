@@ -1600,11 +1600,11 @@ namespace OpenCiv1
 		}
 
 		/// <summary>
-		/// ?
+		/// Shows spaceship nation selection dialog.
 		/// </summary>
-		public void F18_0000_1527()
+		public void F18_0000_1527_ShowSpaceshipNationDialog()
 		{
-			this.oCPU.Log.EnterBlock("F18_0000_1527()");
+			this.oCPU.Log.EnterBlock("F18_0000_1527_ShowSpaceshipNationDialog()");
 
 			// function body
 			this.oCPU.PUSH_UInt16(this.oCPU.BP.Word);
@@ -1654,7 +1654,7 @@ namespace OpenCiv1
 			this.oCPU.SP.Word = this.oCPU.BP.Word;
 			this.oCPU.BP.Word = this.oCPU.POP_UInt16();
 			// Far return
-			this.oCPU.Log.ExitBlock("F18_0000_1527");
+			this.oCPU.Log.ExitBlock("F18_0000_1527_ShowSpaceshipNationDialog");
 		}
 
 		/// <summary>
