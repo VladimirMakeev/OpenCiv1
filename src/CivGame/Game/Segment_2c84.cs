@@ -7,6 +7,9 @@ namespace OpenCiv1
 		private CivGame oParent;
 		private VCPU oCPU;
 
+		// Local variables used exclusively inside this section
+		private ushort Var_654a = 0;
+
 		public Segment_2c84(CivGame parent)
 		{
 			this.oParent = parent;
@@ -27,7 +30,7 @@ namespace OpenCiv1
 			this.oCPU.PUSH_UInt16(this.oCPU.BP.Word);
 			this.oCPU.BP.Word = this.oCPU.SP.Word;
 			this.oCPU.WriteUInt16(this.oCPU.DS.Word, 0xd4ca, 0xffff);
-			this.oCPU.WriteUInt16(this.oCPU.DS.Word, 0x654a, 0x0);
+			Var_654a = 0;
 
 			if (menuIndex == -1)
 			{
@@ -74,7 +77,7 @@ namespace OpenCiv1
 			// Instruction address 0x2c84:0x0082, size: 5
 			this.oParent.Segment_11a8.F0_11a8_0268();
 
-			this.oCPU.AX.Word = this.oCPU.ReadUInt16(this.oCPU.DS.Word, 0x654a);
+			this.oCPU.AX.Word = Var_654a;
 			this.oCPU.CWD(this.oCPU.AX, this.oCPU.DX);
 			this.oCPU.CMP_UInt16(this.oCPU.AX.Word, 0x1);
 			if (this.oCPU.Flags.NE) goto L0099;
@@ -85,7 +88,7 @@ namespace OpenCiv1
 			this.oParent.Segment_1238.F0_1238_1b44();
 
 		L0099:
-			this.oCPU.AX.Word = this.oCPU.ReadUInt16(this.oCPU.DS.Word, 0x654a);
+			this.oCPU.AX.Word = Var_654a;
 			this.oCPU.CWD(this.oCPU.AX, this.oCPU.DX);
 			this.oCPU.DX.Word = this.oCPU.OR_UInt16(this.oCPU.DX.Word, this.oCPU.AX.Word);
 			if (this.oCPU.Flags.NE) goto L00a6;
@@ -642,7 +645,7 @@ namespace OpenCiv1
 			// Instruction address 0x2c84:0x065c, size: 5
 			this.oParent.Segment_11a8.F0_11a8_0250();
 
-			this.oCPU.WriteUInt16(this.oCPU.DS.Word, 0x654a, 0xffff);
+			Var_654a = 0xffff;
 
 			switch (selectedOption)
 			{
@@ -717,7 +720,7 @@ namespace OpenCiv1
 			// Instruction address 0x2c84:0x0739, size: 5
 			this.oParent.Segment_11a8.F0_11a8_0250();
 
-			this.oCPU.WriteUInt16(this.oCPU.DS.Word, 0x654a, 0xffff);
+			Var_654a = 0xffff;
 			this.oCPU.AX.Word = this.oCPU.ReadUInt16(this.oCPU.SS.Word, (ushort)(this.oCPU.BP.Word - 0x4));
 			this.oCPU.AX.Word = this.oCPU.OR_UInt16(this.oCPU.AX.Word, this.oCPU.AX.Word);
 			if (this.oCPU.Flags.E) goto L0766;
@@ -776,10 +779,6 @@ namespace OpenCiv1
 			this.oCPU.Log.EnterBlock("F0_2c84_07af_CivilopediaMenu()");
 
 			// function body
-			this.oCPU.PUSH_UInt16(this.oCPU.BP.Word);
-			this.oCPU.BP.Word = this.oCPU.SP.Word;
-			this.oCPU.SP.Word = this.oCPU.SUB_UInt16(this.oCPU.SP.Word, 0x2);
-
 			// Instruction address 0x2c84:0x07bd, size: 5
 			this.oParent.MSCAPI.strcpy(0xba06, " Complete\n Civilization Advances\n City Improvements\n Military Units\n Terrain Types\n");
 
@@ -787,24 +786,17 @@ namespace OpenCiv1
 			this.oParent.MSCAPI.strcat(0xba06, " Miscellaneous\n");
 
 			// Instruction address 0x2c84:0x07e1, size: 5
-			this.oParent.Segment_2d05.F0_2d05_0031(0xba06, 182, 8, 0);
+			ushort selectedOption = this.oParent.Segment_2d05.F0_2d05_0031(0xba06, 182, 8, 0);
+			if (selectedOption == 0xffff)
+			{
+				Var_654a = 1;
+			}
+			else
+			{
+				this.oParent.Civilopedia.F8_0000_0000_ShowCivilopedia((ushort)(selectedOption - 1));
+				Var_654a = 0xffff;
+			}
 
-			this.oCPU.WriteUInt16(this.oCPU.SS.Word, (ushort)(this.oCPU.BP.Word - 0x2), this.oCPU.AX.Word);
-			this.oCPU.CMP_UInt16(this.oCPU.AX.Word, 0xffff);
-			if (this.oCPU.Flags.E) goto L0806;
-
-			this.oCPU.AX.Word = this.oCPU.DEC_UInt16(this.oCPU.AX.Word);
-			this.oParent.Civilopedia.F8_0000_0000(this.oCPU.AX.Word);
-
-			this.oCPU.WriteUInt16(this.oCPU.DS.Word, 0x654a, 0xffff);
-			goto L080c;
-
-		L0806:
-			this.oCPU.WriteUInt16(this.oCPU.DS.Word, 0x654a, 0x1);
-
-		L080c:
-			this.oCPU.SP.Word = this.oCPU.BP.Word;
-			this.oCPU.BP.Word = this.oCPU.POP_UInt16();
 			// Far return
 			this.oCPU.Log.ExitBlock("F0_2c84_07af_CivilopediaMenu");
 		}
