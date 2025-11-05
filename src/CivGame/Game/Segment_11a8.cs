@@ -409,7 +409,7 @@ namespace OpenCiv1
 			this.oCPU.PUSH_UInt16(this.oCPU.BP.Word);
 			this.oCPU.BP.Word = this.oCPU.SP.Word;
 			this.oCPU.SP.Word = this.oCPU.SUB_UInt16(this.oCPU.SP.Word, 0x6);
-			this.oCPU.WriteUInt16(this.oCPU.DS.Word, 0xd76a, 0x0);
+			this.oParent.Var_d76a_EarthMap = false;
 			goto L04bb;
 
 		L0494:
@@ -648,7 +648,7 @@ namespace OpenCiv1
 			// Instruction address 0x11a8:0x0796, size: 3
 			F0_11a8_0268();
 
-			this.oCPU.WriteUInt16(this.oCPU.DS.Word, 0xd76a, 0x1);
+			this.oParent.Var_d76a_EarthMap = true;
 
 			this.oParent.GameInitAndIntro.F7_0000_0012_GameIntro();
 

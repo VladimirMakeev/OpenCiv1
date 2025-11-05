@@ -1045,8 +1045,12 @@ namespace OpenCiv1
 
 			L0c1b:
 				if (this.oParent.CivState.TurnCount != 0) goto L0c49;
-				this.oCPU.CMP_UInt16(this.oCPU.ReadUInt16(this.oCPU.DS.Word, 0xd76a), 0x0);
-				if (this.oCPU.Flags.E) goto L0c49;
+
+				if (!this.oParent.Var_d76a_EarthMap)
+				{
+					goto L0c49;
+				}
+
 				this.oCPU.SI.Word = (ushort)this.oParent.CivState.Players[playerID].NationalityID;
 				this.oCPU.SI.Word = this.oCPU.SHL_UInt16(this.oCPU.SI.Word, 0x1);
 				this.oCPU.AX.Low = this.oCPU.ReadUInt8(this.oCPU.DS.Word, (ushort)(this.oCPU.SI.Word + 0x35da));

@@ -90,6 +90,9 @@ namespace OpenCiv1
 		public ushort Var_d762 = 0;
 		public ushort Var_d768 = 0;
 
+		/// <summary>Does the game take place on the Earth map or not</summary>
+		public bool Var_d76a_EarthMap = false;
+
 		// Currently pressed mouse button: 0 - nothing, 1 - left button, 2 - right button
 		public ushort Var_db3a_MouseButton = 0;
 		// Current mouse position, in pixels. Position (0, 0) is the top-left corner

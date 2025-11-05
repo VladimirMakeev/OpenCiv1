@@ -2108,8 +2108,12 @@ namespace OpenCiv1
 
 		L13d9:
 			if (this.oParent.CivState.TurnCount != 0) goto L13f1;
-			this.oCPU.CMP_UInt16(this.oCPU.ReadUInt16(this.oCPU.DS.Word, 0xd76a), 0x0);
-			if (this.oCPU.Flags.E) goto L13f1;
+
+			if (!this.oParent.Var_d76a_EarthMap)
+			{
+				goto L13f1;
+			}
+
 			this.oCPU.WriteUInt16(this.oCPU.SS.Word, (ushort)(this.oCPU.BP.Word - 0x28), 0xf);
 			this.oCPU.WriteUInt16(this.oCPU.SS.Word, (ushort)(this.oCPU.BP.Word - 0x2c), 0x0);
 
